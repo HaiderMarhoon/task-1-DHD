@@ -1,132 +1,119 @@
-🏢 Mini Multi-Tenant Workspace API
+# 🏢 Mini Multi-Tenant Workspace API
+A lightweight, multi-tenant workspace and task management API built with Node.js, Express, and SQLite. Ideal for demo purposes, technical interviews, or small internal projects.
 
-A lightweight, multi-tenant workspace and task management API built with Node.js, Express, and SQLite.
-
-It supports:
-
-User management
-
-Workspaces
-
-Tasks
-
-Summary statistics (completed vs pending tasks)
-
-This API is ideal for demo purposes, interviews, or small internal projects.
-
-📌 Features
-Users
-
+## 📌 Features
+### 👥 Users
 Create new users
 
 Retrieve all users
 
-Workspaces
-
+### 🏢 Workspaces
 Create new workspaces
 
-List workspaces
+List all workspaces
 
 Add users to specific workspaces
 
-Tasks
-
+### 📋 Tasks
 Create tasks inside a workspace
 
 Retrieve tasks by workspace
 
 Mark tasks as complete
 
-Summary
-
-Overview of total users, workspaces, tasks
+## 📊 Summary
+Overview of total users, workspaces, and tasks
 
 Counts of completed vs pending tasks
 
-🛠 Tech Stack
+## 🛠 Tech Stack
+### Backend: Node.js + Express
 
-Backend: Node.js + Express
+### Database: SQLite (file-based, lightweight, persistent)
 
-Database: SQLite (local file-based, lightweight, persistent)
+### JSON Parsing: Built-in Express JSON middleware
 
-JSON Parsing: Built-in Express JSON middleware
+### Testing Tools: Postman, curl, Thunder Client
 
-Testing Tools: Postman, curl, Thunder Client
-
-📂 Project Structure
+### 📂 Project Structure
+```bash
 workspace-api/
 │
-├── index.js           # Main server file
-├── db.js              # SQLite connection & schema
+├── index.js # Main server file
+├── db.js # SQLite connection & schema setup
 ├── package.json
-├── database.db        # Auto-created SQLite database file
+├── database.db # Auto-created SQLite database file
 ├── routes/
-│   ├── users.js       # User-related routes
-│   ├── workspaces.js  # Workspace-related routes
-│   ├── tasks.js       # Task-related routes
-│   └── summary.js     # Summary statistics route
+│ ├── users.js # User-related routes
+│ ├── workspaces.js # Workspace-related routes
+│ ├── tasks.js # Task-related routes
+│ └── summary.js # Summary statistics route
 └── README.md
+```
 
-⚡ Setup & Installation
 
-1️⃣ Clone the repository
+## ⚡ Setup & Installation
+Clone and navigate to project directory
 
+```bash
 git clone <your-repo-url>
 cd workspace-api
-
-
-2️⃣ Install dependencies
-
+Install dependencies
+```
+``` bash
 npm install
+Start the server
+```
 
-
-3️⃣ Start the server
-
+```bash
 node index.js
-
-
+```
 You should see:
-
+``` bash
+text
 SQLite connected
 API running on http://localhost:3000
+```
+## 📌 Important Note
+This API uses Express built-in JSON parsing. All POST/PATCH requests must include the header:
 
-📌 Middleware Note
-
-This API uses Express built-in JSON parsing, so all POST requests must include the header:
-
+text
 Content-Type: application/json
-
 🧪 API Endpoints
-Base URL
-http://localhost:3000
-
-1️⃣ Users
-Create User
-POST /users
+Base URL: http://localhost:3000
 
 
-Body Example:
+### 👥 Users
+#### Create User
 
+Method: POST /users
+
+Body:
+``` bash
+json
 {
   "name": "Ali",
   "email": "ali@test.com"
 }
+```
 
-
-Response Example:
-
+Response:
+``` bash
+json
 {
   "id": 1,
   "name": "Ali",
   "email": "ali@test.com"
 }
+``` 
 
-Get All Users
-GET /users
+#### Get All Users
 
+Method: GET /users
 
-Response Example:
-
+Response:
+``` bash 
+json
 [
   {
     "id": 1,
@@ -134,83 +121,93 @@ Response Example:
     "email": "ali@test.com"
   }
 ]
+```
 
-2️⃣ Workspaces
-Create Workspace
-POST /workspaces
+### 🏢 Workspaces
+#### Create Workspace
 
+Method: POST /workspaces
 
-Body Example:
-
+Body:
+```bash
+json
 {
   "name": "Development Team"
 }
+```
 
 
-Response Example:
-
+Response:
+```bash
+json
 {
   "id": 1,
   "name": "Development Team"
 }
+```
+#### List Workspaces
 
-List Workspaces
-GET /workspaces
+Method: GET /workspaces
 
-
-Response Example:
-
+Response:
+```bash
+json
 [
   {
     "id": 1,
     "name": "Development Team"
   }
 ]
+```
 
-Add User to Workspace
-POST /workspaces/:id/users
+#### Add User to Workspace
 
+Method: POST /workspaces/:id/users
 
-Body Example:
-
+Body:
+```bash
+json
 {
   "userId": 1
 }
-
-
-Response Example:
-
+```
+Response:
+```bash
+json
 {
   "message": "User added to workspace"
 }
+```
+### 📋 Tasks
+#### Create Task
 
-3️⃣ Tasks
-Create Task
-POST /tasks
+Method: POST /tasks
 
-
-Body Example:
-
+Body:
+```bash
+json
 {
   "title": "Set up database",
   "workspaceId": 1
 }
-
-
-Response Example:
-
+```
+Response:
+```bash
+json
 {
   "id": 1,
   "title": "Set up database",
   "completed": false
 }
+```
 
-Get Tasks by Workspace
-GET /tasks?workspaceId=1
+#### Get Tasks by Workspace
 
+Method: GET /tasks?workspaceId=1
 
-Response Example:
-
+Response:
+```bash 
+json
 [
   {
     "id": 1,
@@ -219,23 +216,29 @@ Response Example:
     "completed": 0
   }
 ]
+```
 
-Mark Task Complete
-PATCH /tasks/:id
+#### Mark Task Complete
 
+Method: PATCH /tasks/:id
 
-Response Example:
-
+Response:
+```bash 
+json
 {
   "message": "Task completed"
 }
+```
 
-4️⃣ Summary
-GET /summary
+### 📊 Summary
 
+#### Get Summary Statistics
 
-Response Example:
+Method: GET /summary
 
+Response:
+```bash 
+json
 {
   "users": 2,
   "workspaces": 1,
@@ -245,32 +248,38 @@ Response Example:
     "pending": 3
   }
 }
+``` 
 
-💾 Database Details
-
+### 💾 Database Schema
 SQLite database file: database.db
-Tables and schema (defined in db.js):
 
+Tables defined in db.js:
+```bash
+sql
 -- Users Table
 CREATE TABLE users(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL
 );
-
+```
+```bash
 -- Workspaces Table
 CREATE TABLE workspaces(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
-
+```
+```bash
 -- Workspace Users (many-to-many)
 CREATE TABLE workspace_users(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   workspace_id INTEGER,
   user_id INTEGER
 );
+```
 
+```bash
 -- Tasks Table
 CREATE TABLE tasks(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -278,46 +287,35 @@ CREATE TABLE tasks(
   workspace_id INTEGER,
   completed INTEGER DEFAULT 0
 );
+``` 
 
+## Features:
 
 Data persists across server restarts
 
-Tables are auto-created if missing
+Tables auto-created if missing
 
-🔧 Testing Tips
+SQLite provides lightweight persistence
 
-Use Postman, curl, or Thunder Client
+## 🔧 Testing Tips
+Using curl:
 
-All POST requests must include JSON headers
-
-Example curl command:
-
+bash
+# Create a user
+```bash
 curl -X POST http://localhost:3000/users \
--H "Content-Type: application/json" \
--d '{"name":"Ali","email":"ali@test.com"}'
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ali","email":"ali@test.com"}'
+  ```
+### Testing Tools:
 
-⚙️ Optional Improvements
+Postman
 
-Authentication with JWT or OAuth2
+Thunder Client (VS Code extension)
 
-Task deadlines / priority / labels
+Any REST client supporting JSON
 
-MVC separation (services, controllers, routes)
 
-Pagination for tasks, users, workspaces
 
-Error handling with custom middleware
-
-👏 Interview / Demo Notes
-
-/ route shows “Cannot GET /” — intentional, API is REST-focused
-
-Multi-tenant logic is handled via workspace IDs
-
-SQLite chosen for lightweight persistence
-
-Strong talking point: “All workspace data is separated by workspace_id, enabling multi-tenancy without a heavy database.”
-
-👤 Author
-
+## 👤 Author
 Haider Marhoon | B.Sc. Cybersecurity Student | University of Bahrain
